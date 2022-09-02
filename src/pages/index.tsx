@@ -1,54 +1,178 @@
-import axios from 'axios';
-import { signIn, useSession } from 'next-auth/react'
-import { useEffect } from 'react';
-export default function Example() {
+import { useRef, useState } from "react";
+import { Input } from '../components/input';
+import { GetServerSideProps } from "next";
+import { getSession, GetSessionParams, signOut } from "next-auth/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-  function handleGithub() {
-    signIn('github');
+import S3 from "react-aws-s3"
+import { useForm, Validate } from 'react-hook-form'
+
+export const Form = ({
+  region,
+  bucket,
+  accessKeyId,
+  secretAccessKey }) => {
+  let onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  const schema = yup.object().shape({
+    firstName: yup.string().required("Este campo é obrigatório"),
+    lastName: yup.string().required("Este campo é obrigatório"),
+    cargo: yup.string().required("Este campo é obrigatório"),
+    email: yup.string().email().required("Este campo é obrigatório"),
+    phone: yup.string().required("Este campo é obrigatório"),
+    dateBirth: yup.date().required("Este campo é obrigatório"),
+    address: yup.string().required("Este campo é obrigatório"),
+    city: yup.string().required("Este campo é obrigatório"),
+    state: yup.string().required("Este campo é obrigatório"),
+    zip: yup.string().required("Este campo é obrigatório"),
+    about: yup.string().required("Este campo é obrigatório"),
+    curriculo: yup.mixed().test("required", "Curriculo é obrigatório", (file) => {
+      if (file) return true
+      return false
+    }),
+  });
+
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+
+
+  const config = {
+    bucketName: bucket,
+    dirname: "uploads",
+    region,
+    accessKeyId,
+    secretAccessKey,
+    s3Url: "https://gb-rh.s3.amazonaws.com",
+  };
+
+  console.log(watch("curriculo")); // watch input value by passing the name of it
+
+
+
+  const fileInput: React.MutableRefObject<HTMLInputElement> = useRef();
+  const submit = async (data) => {
+    console.log(data);
+    const isValidate = await schema.isValid(data);
+    console.log(isValidate);
+
+
+
+
+    // let file = fileInput.current.files[0];
+    // let newFileName = encodeURIComponent(fileInput.current.files[0].name.toLowerCase().replace(/[^a-z0-9 _-]+/gi, '-').replace(/\s+/g, '-'));
+    // console.log("file", file);
+    // // const newFileName = 'test-file';
+    // console.log("file name", newFileName);
+
+    // const ReactS3Client = new S3(config);
+    // ReactS3Client.uploadFile(file, newFileName)
+    //   .then(data => {
+    //     console.log(data);
+    //     if (data.status === 204) {
+    //       console.log("success");
+    //     }
+    //   }).catch(err => {
+    //     console.log({ err });
+    //   });
+
   }
 
-  const { data } = useSession();
-
-  console.log(data);
-
   return (
-    <>
-      <header className="max-w-lg mx-auto">
-        <a href="#">
-          <h1 className="text-4xl font-bold text-white text-center">Startup</h1>
-        </a>
-      </header>
-      <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
-        <section>
-          <h3 className="font-bold text-2xl">Welcome to Startup</h3>
-          <p className="text-gray-600 pt-2">Sign in to your account.</p>
-        </section>
-        <section className="mt-10">
-          <form className="flex flex-col" method="POST" action="#">
-            <div className="mb-6 pt-3 rounded bg-gray-200">
-              <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="email">Email</label>
-              <input type="text" id="email" className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3" />
-            </div>
-            <div className="mb-6 pt-3 rounded bg-gray-200">
-              <label className="block text-gray-700 text-sm font-bold mb-2 ml-3" htmlFor="password">Password</label>
-              <input type="password" id="password" className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3" />
-            </div>
-            <div className="flex justify-end">
-              <a href="#" className="text-sm text-purple-600 hover:text-purple-700 hover:underline mb-6">Forgot your password?</a>
-            </div>
-            <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" type="button" onClick={handleGithub}>Sign In</button>
-          </form>
-        </section>
-      </main>
-      <div className="max-w-lg mx-auto text-center mt-12 mb-6">
-        <p className="text-white">Don't have an account? <a href="#" className="font-bold hover:underline">Sign up</a>.</p>
-      </div>
-      <footer className="max-w-lg mx-auto flex justify-center text-white">
-        <a href="#" className="hover:underline">Contact</a>
-        <span className="mx-3">•</span>
-        <a href="#" className="hover:underline">Privacy</a>
-      </footer>
+    <section className=" py-1 bg-blueGray-50">
+      <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
+        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+          <div className="rounded-t bg-white mb-0 px-6 py-6">
+            <div className="text-center flex justify-between">
+              <h6 className="text-blueGray-700 text-xl font-bold">
+                Formulário
+              </h6>
 
-    </>
-  )
+            </div>
+          </div>
+          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+            <form onSubmit={handleSubmit(submit)}>
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Informação do candidato
+              </h6>
+              <div className="flex flex-wrap">
+                <Input label="Nome" name="firstName" register={register} message={`${errors?.firstName?.message || ""}`} />
+                <Input label="Sobrenome" name="lastName" register={register} message={`${errors?.lastName?.message || ""}`} />
+                <Input label="Cargo" name="cargo" register={register} message={`${errors?.cargo?.message || ""}`} />
+                <Input label="Email" name="email" register={register} message={`${errors?.email?.message || ""}`} type="email" />
+                <Input label="Telefone" name="phone" register={register} message={`${errors?.phone?.message || ""}`} type="tel" />
+                <Input label="Data de Nascimento" name="dateBirth" register={register} message={`${errors?.dateBirth?.message || ""}`} type="date" />
+
+              </div>
+              <hr className="mt-6 border-b-1 border-blueGray-300" />
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Informação de contato
+              </h6>
+              <div className="flex flex-wrap">
+                <Input label="Endereço" name="address" register={register} message={`${errors?.address?.message || ""}`} size="lg" />
+                <Input label="Cidade" name="city" register={register} message={`${errors?.city?.message || ""}`} size="sm" />
+                <Input label="Estado" name="state" register={register} message={`${errors?.state?.message || ""}`} size="sm" />
+                {/* <Input label="País" name="country" register={register} message={`${errors?.country?.message || ""}`} size="sm" /> */}
+                <Input label="CEP" name="zip" register={register} message={`${errors?.zip?.message || ""}`} size="sm" />
+              </div>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-12/12 px-4">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" htmlFor="file_input">Curriculo</label>
+                  <input className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input"
+                    ref={fileInput}
+                    name="curriculo"
+                    {...register("curriculo", { required: true, onChange })}
+                    type="file" />
+                </div>
+              </div>
+
+
+              <span className="text-xs text-red-600">{`${errors?.curriculo?.message || ""}`}</span>
+              <hr className="mt-6 border-b-1 border-blueGray-300" />
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Sobre mim
+              </h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-12/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                      Informações adicionais
+                    </label>
+                    <textarea className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      {...register("about", { required: false, onChange })}
+                      name="about"
+                      rows={4}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                // onClick={handleSubmit(submit)}
+                type="submit"
+                className="float-right bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                Enviar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req }: GetSessionParams) => {
+  const session = await getSession({ req });
+
+  console.log("session", session);
+
+  return {
+    props: {
+      region: process.env.S3_REGION,
+      bucket: process.env.S3_BUCKET,
+      accessKeyId: process.env.S3_KEY,
+      secretAccessKey: process.env.S3_SECRET,
+    },
+  }
+
+}
+export default Form
