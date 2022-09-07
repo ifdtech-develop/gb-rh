@@ -19,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { skip, take } = query;
       const data = await getCandidates({ skip: Number(skip), take: Number(take) });
 
-      res.status(200).json( data );
+      res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

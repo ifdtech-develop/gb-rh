@@ -198,9 +198,6 @@ export const Form = ({
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req }: GetSessionParams) => {
-  // const session = await getSession({ req });
-
-  // console.log("session", session);
 
   return {
     props: {

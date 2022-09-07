@@ -32,4 +32,6 @@ model candidate {
   curriculo String   @db.VarChar(255)
   stage     String   @db.VarChar(255)
   status    String   @db.VarChar(255)
+  rh        String?  @db.VarChar(255)
+  rhid      Int?
 }

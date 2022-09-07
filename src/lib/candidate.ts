@@ -5,9 +5,14 @@ import {
 
 const prisma = new PrismaClient();
 
-type Pagination = {
-  skip: 0 | number;
-  take: 0 | number;
+export type PaginationProps = {
+  skip: number;
+  take: number;
+};
+
+export type CandidateProps = {
+  data: candidate[];
+  total: number;
 };
 
 export const newCandidate = async ({
@@ -27,28 +32,37 @@ export const newCandidate = async ({
   zip,
   about
 }: candidate) => {
-  await prisma.candidate.create({
-    data: {
-      cargo,
-      address,
-      city,
-      country,
-      dateBirth,
-      email,
-      firstName,
-      lastName,
-      phone,
-      stage,
-      status,
-      state,
-      curriculo,
-      zip,
-      about
-    }
-  });
+  try {
+    
+    await prisma.candidate.create({
+      data: {
+        cargo,
+        address,
+        city,
+        country,
+        dateBirth,
+        email,
+        firstName,
+        lastName,
+        phone,
+        stage,
+        status,
+        state,
+        curriculo,
+        zip,
+        about
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    
+  } finally {
+    await prisma.$disconnect()
+  }
 }
 
-export const getCandidates = async ({ take, skip }: Pagination) => {
+export const getCandidates = async ({ take, skip }: PaginationProps) => {
+  try {
   const candidateCount = await prisma.candidate.count()
   const info = await prisma.candidate.findMany({
     take,
@@ -57,5 +71,11 @@ export const getCandidates = async ({ take, skip }: Pagination) => {
       id: "desc"
     }
   });
-  return { data:info, total:candidateCount };
+  return { data: info, total: candidateCount } as CandidateProps;
+  } catch (error) {
+    console.log(error)
+  } finally {
+    await prisma.$disconnect()
+  }
+
 }
