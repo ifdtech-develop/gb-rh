@@ -137,6 +137,7 @@ export const CustomPaginationActionsTable = ({
                     // className="text-blue-400 underline hover:underline-offset-4"
                     href={`https://gb-rh.s3.amazonaws.com/${row.curriculo}`}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                       Curriculo
