@@ -18,6 +18,7 @@ const Page = ({
   accessKeyId,
   secretAccessKey,
   company,
+  api
 }) => {
   const [page, setPage] = useState("form");
 
@@ -33,6 +34,7 @@ const Page = ({
           secretAccessKey={secretAccessKey}
           bucket={bucket}
           user={name}
+          api={api}
         />
       ),
 
@@ -99,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       id: session.user.id,
       data: data.data,
       total: data.total,
+      api: process.env.API,
     },
   };
 };

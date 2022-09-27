@@ -6,7 +6,13 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export const ItemList = ({ text, open, ...props }) => {
+type Props = {
+  text: string;
+  open: boolean;
+  children: React.ReactNode;
+};
+
+export const ItemList = ({ text, open, children }:Props) => {
   return (
     <ListItem
       // key={text}
@@ -30,7 +36,7 @@ export const ItemList = ({ text, open, ...props }) => {
             justifyContent: "center",
           }}
         >
-          {props.children}
+          {children}
         </ListItemIcon>
         <ListItemText
           primary={text}
