@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   );
 
-  const res = await axios.get(`${process.env.API}/estabelecimentos`);
+  const res = await axios.get(`${process.env.API}/estabelecimentos/filter`);
   const companys = await res.data;
   const data: CandidateProps = await response.data;
 

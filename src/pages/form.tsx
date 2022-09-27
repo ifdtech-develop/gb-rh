@@ -14,6 +14,7 @@ import Image from "next/image";
 
 import Logo from "../assets/img/logo.png";
 import { Select } from "../components/Select";
+import Router from "next/router";
 const Form = ({
   changePage,
   region,
@@ -60,18 +61,18 @@ const Form = ({
     // username: yup.string(),
     // status: yup.string()
   });
-  const [companyList, setCompanyList] = useState([]);
+  // const [companyList, setCompanyList] = useState([]);
 
-  useLayoutEffect(() => {
-    async function Company() {
-      await axios
-        .get(`${api}/estabelecimentos`)
-        .then((response) => {
-          setCompanyList(response.data);
-        });
-    }
-    Company();
-  }, []);
+  // useLayoutEffect(() => {
+  //   async function Company() {
+  //     await axios
+  //       .get(`${api}/estabelecimentos`)
+  //       .then((response) => {
+  //         setCompanyList(response.data);
+  //       });
+  //   }
+  //   Company();
+  // }, []);
 
   const {
     register,
@@ -140,6 +141,7 @@ const Form = ({
         enqueueSnackbar("Candidato cadastrado com sucesso!", {
           variant: "success",
         });
+        Router.push("/candidatos");
       } catch (error) {
         console.error(error.message);
         enqueueSnackbar(error.message, { variant: "error" });
@@ -184,13 +186,13 @@ const Form = ({
                       name="company"
                       {...register("company", {
                         required: true,
-                        onChange: (e) => setCompanyName(e.target.value),
+                        // onChange: (e) => setCompanyName(e.target.value),
                       })}
                       render={({ field: { onChange, name, value } }) => (
                         <Select
                           label="Empresa"
                           name={name}
-                          data={companyList}
+                          data={company}
                           onChange={onChange}
                           message={`${errors?.company?.message || ""}`}
                         />
@@ -334,7 +336,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }: GetSessionParams) => {
   const session = await getSession({ req });
 
-  // const response = await axios.get(`${process.env.API}/estabelecimentos`);
+  const response = await axios.get(`${process.env.API}/estabelecimentos/filter`);
 
   if (!session) {
     return {
@@ -351,7 +353,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       bucket: process.env.S3_BUCKET,
       accessKeyId: process.env.S3_KEY,
       secretAccessKey: process.env.S3_SECRET,
-      // company: response.data,
+      company: response.data,
       user: session.user.name,
       id: session.user.id,
       api: process.env.API,

@@ -78,30 +78,40 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
-   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/candidate`, {
-    params: {
-      skip: 0,
-      take: 10,
-    },
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-    },
-  });
-
-  const data: CandidateProps = await res.data;
-
   return {
-    props: {
-      region: process.env.S3_REGION,
-      bucket: process.env.S3_BUCKET,
-      accessKeyId: process.env.S3_KEY,
-      secretAccessKey: process.env.S3_SECRET,
-      // company: response.data,
-      user: session.user.name,
-      id: session.user.id,
-      data: data.data,
-      total: data.total,
-      api: process.env.API,
+    redirect: {
+      destination: "/candidatos",
+      permanent: false,
     },
   };
 };
+
+  // const response = await axios.get(`${process.env.API}/estabelecimentos/filter`);
+
+  //  const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/candidate`, {
+  //   params: {
+  //     skip: 0,
+  //     take: 10,
+  //   },
+  //   headers: {
+  //     Authorization: `Bearer ${session.accessToken}`,
+  //   },
+  // });
+
+  // const data: CandidateProps = await res.data;
+
+  // return {
+  //   props: {
+  //     region: process.env.S3_REGION,
+  //     bucket: process.env.S3_BUCKET,
+  //     accessKeyId: process.env.S3_KEY,
+  //     secretAccessKey: process.env.S3_SECRET,
+  //     company: response.data,
+  //     user: session.user.name,
+  //     id: session.user.id,
+  //     data: data.data,
+  //     total: data.total,
+  //     api: process.env.API,
+  //   },
+  // };
+

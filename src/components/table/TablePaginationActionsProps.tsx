@@ -17,6 +17,7 @@ import { Modal } from "../modal";
 import moment from "moment";
 import { CompanyProps } from "../../types/company";
 import { UserProps } from "../../types/user";
+import { Status } from "./Status";
 
 export interface TablePaginationActionsProps {
   count: number;
@@ -28,15 +29,14 @@ export interface TablePaginationActionsProps {
   ) => void;
 }
 
-
 export const CustomPaginationActionsTable = ({
   data,
   total,
   companys,
-  id
+  id,
 }: CandidateProps & CompanyProps & UserProps) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rowsData, setRowsData] = React.useState(data);
 
   React.useEffect(() => {
@@ -155,10 +155,6 @@ export const CustomPaginationActionsTable = ({
     });
   }, [rowsData]);
 
-  
-
-
-
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -172,9 +168,11 @@ export const CustomPaginationActionsTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  
   return (
     <>
-    {/* {moment.locale("pt-br")}  */}
+      {/* {moment.locale("pt-br")}  */}
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
@@ -203,7 +201,7 @@ export const CustomPaginationActionsTable = ({
                   {row.manager}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
-                  {row.status}
+                  {Status(row.status)}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
                   {row.languages}
@@ -233,8 +231,7 @@ export const CustomPaginationActionsTable = ({
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[
-                  3,
-                  6,
+                  10,
                   25,
                   50,
                   { label: "Todos", value: total },
