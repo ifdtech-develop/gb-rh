@@ -4,6 +4,7 @@ import { SnackbarProvider } from "notistack";
 import "../styles/global.css";
 import * as locales from "@mui/material/locale";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import 'moment/locale/pt-br'
 
 export default function App({
   Component,
@@ -17,8 +18,9 @@ export default function App({
     () => createTheme(theme, locales[locale]),
     [locale, theme]
   );
-
+    
   return (
+
     <SessionProvider session={session}>
       <SnackbarProvider maxSnack={3}>
         <ThemeProvider theme={themeWithLocale}>

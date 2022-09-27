@@ -69,7 +69,7 @@ export default NextAuth({
     },
   },
   pages: {
-    error: "/admin/login",
+    error: "/login",
   },
   session: {
     strategy: "jwt",
@@ -97,5 +97,5 @@ export default NextAuth({
       console.log(message);
     },
   },
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
 });

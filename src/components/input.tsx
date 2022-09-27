@@ -12,9 +12,11 @@ type Props = {
   message?: string;
   size?: "sm" | "md" | "lg";
   type?: HTMLInputTypeAttribute;
+  defaultValue?: string;
+  disabled?: false | true;
 }
 
-export function Input({ label, name, onChange, register, required, message, size, type }: Props) {
+export function Input({ label, name, onChange, register, required, message, size, type, defaultValue, disabled ,...rest }: Props) {
   let width: string;
   if (!size) width = "w-full lg:w-6/12 px-4";
   if (size === "md") width = "w-full lg:w-6/12 px-4";
@@ -33,7 +35,9 @@ export function Input({ label, name, onChange, register, required, message, size
           name={name}
           {...register(name, { required, onChange })}
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          defaultValue="" />
+          defaultValue={defaultValue}
+          disabled={disabled}
+          {...rest} />
       </div>
       {<span className="text-xs text-red-600">{message}</span>}
     </div>

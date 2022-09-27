@@ -21,10 +21,12 @@
     "@tailwindcss/forms": "^0.5.2",
     "aws-sdk": "^2.1204.0",
     "axios": "^0.27.2",
+    "daisyui": "^2.25.0",
     "date-fns": "^2.11.1",
     "flowbite": "^1.5.2",
     "flowbite-react": "^0.1.10",
     "gray-matter": "^4.0.2",
+    "moment": "^2.29.4",
     "next": "^12.2.5",
     "next-auth": "^4.10.3",
     "notistack": "^2.0.5",
@@ -42,14 +44,20 @@
   "devDependencies": {
     "@types/node": "^18.7.13",
     "@types/react": "^18.0.17",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
     "autoprefixer": "^10.4.8",
     "cssnano": "^5.1.13",
-    "eslint": "8.23.0",
+    "eslint": "^8.0.1",
     "eslint-config-next": "12.2.5",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.7",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "postcss-import": "^14.1.0",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.2"
+    "typescript": "*"
   }
 }

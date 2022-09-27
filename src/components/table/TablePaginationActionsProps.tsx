@@ -14,6 +14,9 @@ import { TablePaginationActions } from "./TablePaginationActions";
 import { TableHead } from "@mui/material";
 import { columns } from "../../components/table/Column";
 import { Modal } from "../modal";
+import moment from "moment";
+import { CompanyProps } from "../../types/company";
+import { UserProps } from "../../types/user";
 
 export interface TablePaginationActionsProps {
   count: number;
@@ -25,12 +28,15 @@ export interface TablePaginationActionsProps {
   ) => void;
 }
 
+
 export const CustomPaginationActionsTable = ({
   data,
   total,
-}: CandidateProps) => {
+  companys,
+  id
+}: CandidateProps & CompanyProps & UserProps) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(3);
   const [rowsData, setRowsData] = React.useState(data);
 
   React.useEffect(() => {
@@ -47,42 +53,111 @@ export const CustomPaginationActionsTable = ({
   }, [page, rowsPerPage]);
 
   function createData(
-    name: string,
-    cargo: string,
     id: number,
-    curriculo: string,
-    phone: string,
+    name: string,
+    company: string,
+    sector: string,
+    type_vacancy: string,
+    manager: string,
+    vacancy: string,
+    schooling: string,
+    hiring_justification: string,
+    experience: string,
+    languages: string,
+    start_forecast: string,
+    document: string,
+    username: string,
     status: string,
-    stage: string
+    userid: number,
+    controllership: number,
+    director: number,
+    createdAt: Date,
+    updatedAt: Date
   ) {
-    return { name, cargo, id, curriculo, phone, status, stage };
+    return {
+      id,
+      name,
+      company,
+      sector,
+      type_vacancy,
+      manager,
+      vacancy,
+      schooling,
+      hiring_justification,
+      experience,
+      languages,
+      start_forecast,
+      document,
+      username,
+      status,
+      userid,
+      controllership,
+      director,
+      createdAt,
+      updatedAt,
+    };
+  }
+  // function to find conpany name by id
+  function findCompany(id: number) {
+    const company = companys.find((company) => company.id === id);
+    return company?.nome_fantasia;
   }
 
   let rows = rowsData?.map((row) => {
     return createData(
-      row.firstName + " " + row.lastName,
-      row.cargo,
       row.id,
-      row.curriculo,
-      row.phone,
+      row.name,
+      findCompany(row.company),
+      row.sector,
+      row.type_vacancy,
+      row.manager,
+      row.vacancy,
+      row.schooling,
+      row.hiring_justification,
+      row.experience,
+      row.languages,
+      row.start_forecast,
+      row.document,
+      row.username,
       row.status,
-      row.stage
+      row.userid,
+      row.controllership,
+      row.director,
+      row.createdAt,
+      row.updatedAt
     );
   });
 
   React.useEffect(() => {
     rows = rowsData?.map((row) => {
       return createData(
-        row.firstName + " " + row.lastName,
-        row.cargo,
         row.id,
-        row.curriculo,
-        row.phone,
+        row.name,
+        findCompany(row.company),
+        row.sector,
+        row.type_vacancy,
+        row.manager,
+        row.vacancy,
+        row.schooling,
+        row.hiring_justification,
+        row.experience,
+        row.languages,
+        row.start_forecast,
+        row.document,
+        row.username,
         row.status,
-        row.stage
+        row.userid,
+        row.controllership,
+        row.director,
+        row.createdAt,
+        row.updatedAt
       );
     });
   }, [rowsData]);
+
+  
+
+
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -97,9 +172,10 @@ export const CustomPaginationActionsTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   return (
     <>
+    {/* {moment.locale("pt-br")}  */}
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead className="sticky top-0">
@@ -122,31 +198,33 @@ export const CustomPaginationActionsTable = ({
                 <TableCell component="th" scope="row" align="center">
                   {row.name}
                 </TableCell>
-                <TableCell align="center">{row.cargo}</TableCell>
+                <TableCell align="center">{row.vacancy}</TableCell>
                 <TableCell style={{ width: 160 }} align="center">
-                  {row.phone}
+                  {row.manager}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
                   {row.status}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
-                  {row.stage}° Etapa
+                  {row.languages}
+                </TableCell>
+                <TableCell style={{ width: 160 }} align="center">
+                  {moment(`${row.createdAt}`).fromNow()}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
                   <a
                     // className="text-blue-400 underline hover:underline-offset-4"
-                    href={`https://gb-rh.s3.amazonaws.com/${row.curriculo}`}
+                    href={`https://gb-rh.s3.amazonaws.com/${row.document}`}
                     target="_blank"
                     rel="noreferrer"
                   >
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      Curriculo
+                      Documento
                     </button>
                   </a>
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
-
-                <Modal />
+                  <Modal row={row} id={id} />
                 </TableCell>
               </TableRow>
             ))}
@@ -155,12 +233,13 @@ export const CustomPaginationActionsTable = ({
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[
-                  10,
+                  3,
+                  6,
                   25,
                   50,
                   { label: "Todos", value: total },
                 ]}
-                colSpan={8}
+                colSpan={9}
                 count={total}
                 rowsPerPage={rowsPerPage}
                 page={page}

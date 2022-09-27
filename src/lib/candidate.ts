@@ -16,43 +16,44 @@ export type CandidateProps = {
 };
 
 export const newCandidate = async ({
-  cargo,
-  address,
-  city,
-  country,
-  dateBirth,
-  email,
-  firstName,
-  lastName,
-  phone,
-  stage,
+  name,
+  company,
+  sector,
+  type_vacancy,
+  manager,
+  vacancy,
+  schooling,
+  hiring_justification,
+  experience,
+  languages,
+  start_forecast,
+  document,
   status,
-  state,
-  curriculo,
-  zip,
-  about
+  userid
+  
 }: candidate) => {
   try {
     
-    await prisma.candidate.create({
+    const data = await prisma.candidate.create({
       data: {
-        cargo,
-        address,
-        city,
-        country,
-        dateBirth,
-        email,
-        firstName,
-        lastName,
-        phone,
-        stage,
+        name,
+        company,
+        sector,
+        type_vacancy,
+        manager,
+        vacancy,
+        schooling,
+        hiring_justification,
+        experience,
+        languages,
+        start_forecast,
+        document,
         status,
-        state,
-        curriculo,
-        zip,
-        about
+        userid
       }
     });
+
+    return data;
   } catch (error) {
     console.log(error);
     
@@ -78,4 +79,35 @@ export const getCandidates = async ({ take, skip }: PaginationProps) => {
     await prisma.$disconnect()
   }
 
+}
+
+export const getCandidateById = async (id: number) => {
+  try {
+    const info = await prisma.candidate.findUnique({
+      where: {
+        id
+      }
+    });
+    return info;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await prisma.$disconnect()
+  }
+}
+
+export const updateCandidate = async (id: number, data: candidate) => {
+  try {
+    const info = await prisma.candidate.update({
+      where: {
+        id
+      },
+      data
+    });
+    return info;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await prisma.$disconnect()
+  }
 }

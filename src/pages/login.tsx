@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { InputMask } from "../../components/inputMask";
+import { InputMask } from "../components/inputMask";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "../../utils/validation";
+import { userSchema } from "../utils/validation";
 import NumberFormat from "react-number-format";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { log } from "console";
-import { CustomInput } from "../../components/customInput";
-import { SignInError } from "../../utils/errorLogin";
+import { CustomInput } from "../components/customInput";
+import { SignInError } from "../utils/errorLogin";
 import { useRouter } from "next/router";
 
 export default function Login() {
@@ -33,7 +33,7 @@ export default function Login() {
           .replaceAll("/", ""),
         senha: data.senha,
 
-        callbackUrl: `${window.location.origin}/admin/candidatos`,
+        callbackUrl: `${window.location.origin}/`,
       });
       if (res?.error) {
         enqueueSnackbar(res.error, { variant: "error" });

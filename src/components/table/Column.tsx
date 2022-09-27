@@ -4,7 +4,7 @@ interface Column {
     | "cargo"
     | "id"
     | "email"
-    | "phone"
+    | "manager"
     | "status"
     | "stage"
     | "actions"
@@ -24,9 +24,10 @@ export const columns: readonly Column[] = [
   },
   { id: "name", label: "Nome", align: "center" },
   { id: "cargo", label: "Cargo", minWidth: 160, align: "center" },
-  { id: "phone", label: "Telefone", minWidth: 100, align: "center" },
+  { id: "manager", label: "Gestor", minWidth: 100, align: "center" },
   { id: "status", label: "Status", minWidth: 100, align: "center" },
-  { id: "stage", label: "Etapa", minWidth: 100, align: "center" },
+  { id: "stage", label: "Idiomas", minWidth: 100, align: "center" },
+  { id: "date", label: "Criado", minWidth: 100, align: "center" },
   {
     id: "curriculo",
     label: "Curriculo",
