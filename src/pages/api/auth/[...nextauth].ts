@@ -31,7 +31,7 @@ export default NextAuth({
           }
         );
         const data = await res.data;
-        console.log(res.data);
+        // console.log(res.data);
         
         if (data.error) {
           throw new Error("default");
@@ -52,6 +52,7 @@ export default NextAuth({
       session.user.id = token.id as number;
       session.user.paf = token.paf;
       session.user.atendente = token.atendente as boolean;
+      session.user.role = token.role as number;
 
       return session;
     },
@@ -64,6 +65,7 @@ export default NextAuth({
         token.id = user.id;
         token.paf = user.paf;
         token.atendente = user.atendente;
+        token.role = user.role;
       }
       return token;
     },

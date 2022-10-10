@@ -32,9 +32,9 @@ export interface TablePaginationActionsProps {
 export const CustomPaginationActionsTable = ({
   data,
   total,
-  companys,
+  // companys,
   id,
-}: CandidateProps & CompanyProps & UserProps) => {
+}: CandidateProps  & UserProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rowsData, setRowsData] = React.useState(data);
@@ -97,17 +97,13 @@ export const CustomPaginationActionsTable = ({
       updatedAt,
     };
   }
-  // function to find conpany name by id
-  function findCompany(id: number) {
-    const company = companys.find((company) => company.id === id);
-    return company?.nome_fantasia;
-  }
+
 
   let rows = rowsData?.map((row) => {
     return createData(
       row.id,
       row.name,
-      findCompany(row.company),
+      row.company,
       row.sector,
       row.type_vacancy,
       row.manager,
@@ -133,7 +129,7 @@ export const CustomPaginationActionsTable = ({
       return createData(
         row.id,
         row.name,
-        findCompany(row.company),
+        row.company,
         row.sector,
         row.type_vacancy,
         row.manager,
@@ -174,7 +170,7 @@ export const CustomPaginationActionsTable = ({
     <>
       {/* {moment.locale("pt-br")}  */}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="flex justify-center">
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead className="sticky top-0">
             <TableRow>
@@ -193,9 +189,9 @@ export const CustomPaginationActionsTable = ({
             {rows?.map((row) => (
               <TableRow key={row.id} className="odd:bg-gray-100">
                 <TableCell style={{ width: 20 }}>{row.id}</TableCell>
-                <TableCell component="th" scope="row" align="center">
+                {/* <TableCell component="th" scope="row" align="center">
                   {row.name}
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="center">{row.vacancy}</TableCell>
                 <TableCell style={{ width: 160 }} align="center">
                   {row.manager}
@@ -203,9 +199,9 @@ export const CustomPaginationActionsTable = ({
                 <TableCell style={{ width: 160 }} align="center">
                   {Status(row.status)}
                 </TableCell>
-                <TableCell style={{ width: 160 }} align="center">
+                {/* <TableCell style={{ width: 160 }} align="center">
                   {row.languages}
-                </TableCell>
+                </TableCell> */}
                 <TableCell style={{ width: 160 }} align="center">
                   {moment(`${row.createdAt}`).fromNow()}
                 </TableCell>

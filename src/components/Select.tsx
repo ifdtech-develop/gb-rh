@@ -18,8 +18,7 @@ type Props = {
   size?: "sm" | "md" | "lg";
   type?: HTMLInputTypeAttribute;
   data: {
-    id: number;
-    nome_fantasia: string;
+    name: string;
   }[];
 };
 
@@ -62,8 +61,8 @@ export function Select({
           >
             <option value={null}>Selecione</option>
             {data.map((item) => (
-              <option value={item.id} key={item.id}>
-                {item.nome_fantasia}
+              <option value={item.name} key={item.name}>
+                {item.name}
               </option>
             ))}
          

@@ -24,7 +24,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import RuleIcon from "@mui/icons-material/Rule";
 import Link from "next/link";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

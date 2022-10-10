@@ -29,7 +29,7 @@ const Page = ({
           changePage={(props) => setPage(props)}
           id={id}
           accessKeyId={accessKeyId}
-          company={company}
+          // company={company}
           region={region}
           secretAccessKey={secretAccessKey}
           bucket={bucket}

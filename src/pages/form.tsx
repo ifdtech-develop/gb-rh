@@ -15,13 +15,14 @@ import Image from "next/image";
 import Logo from "../assets/img/logo.png";
 import { Select } from "../components/Select";
 import Router from "next/router";
+import { company, schooling, sector, type_vacancy } from "../components/data/select";
 const Form = ({
   changePage,
   region,
   bucket,
   accessKeyId,
   secretAccessKey,
-  company,
+  // company,
   user,
   id,
   api
@@ -58,21 +59,8 @@ const Form = ({
           );
         }
       ),
-    // username: yup.string(),
-    // status: yup.string()
   });
-  // const [companyList, setCompanyList] = useState([]);
 
-  // useLayoutEffect(() => {
-  //   async function Company() {
-  //     await axios
-  //       .get(`${api}/estabelecimentos`)
-  //       .then((response) => {
-  //         setCompanyList(response.data);
-  //       });
-  //   }
-  //   Company();
-  // }, []);
 
   const {
     register,
@@ -124,7 +112,7 @@ const Form = ({
 
         await axios.post("/api/candidate", {
           name: data.name,
-          company: Number(data.company),
+          company: data.company,
           sector: data.sector,
           type_vacancy: data.type_vacancy,
           manager: user,
@@ -198,19 +186,53 @@ const Form = ({
                         />
                       )}
                     />
+                    <Controller
+                      control={control}
+                      name="sector"
+                      {...register("sector", {
+                        required: true,
+                        // onChange: (e) => setCompanyName(e.target.value),
+                      })}
+                      render={({ field: { onChange, name, value } }) => (
+                        <Select
+                          label="Área/Setor"
+                          name={name}
+                          data={sector}
+                          onChange={onChange}
+                          message={`${errors?.sector?.message || ""}`}
+                        />
+                      )}
+                    />
 
-                    <Input
+                    <Controller
+                      control={control}
+                      name="type_vacancy"
+                      {...register("type_vacancy", {
+                        required: true,
+                        // onChange: (e) => setCompanyName(e.target.value),
+                      })}
+                      render={({ field: { onChange, name, value } }) => (
+                        <Select
+                          label="Tipo de vaga"
+                          name={name}
+                          data={type_vacancy}
+                          onChange={onChange}
+                          message={`${errors?.type_vacancy?.message || ""}`}
+                        />
+                      )}
+                    />
+                    {/* <Input
                       label="Área/Setor"
                       name="sector"
                       register={register}
                       message={`${errors?.sector?.message || ""}`}
-                    />
-                    <Input
+                    /> */}
+                    {/* <Input
                       label="Tipo de vaga"
                       name="type_vacancy"
                       register={register}
                       message={`${errors?.type_vacancy?.message || ""}`}
-                    />
+                    /> */}
                     <Input
                       label="Gestor"
                       name="manager"
@@ -225,11 +247,22 @@ const Form = ({
                       register={register}
                       message={`${errors?.vacancy?.message || ""}`}
                     />
-                    <Input
-                      label="Escolaridade"
+                                        <Controller
+                      control={control}
                       name="schooling"
-                      register={register}
-                      message={`${errors?.schooling?.message || ""}`}
+                      {...register("schooling", {
+                        required: true,
+                        // onChange: (e) => setCompanyName(e.target.value),
+                      })}
+                      render={({ field: { onChange, name, value } }) => (
+                        <Select
+                          label="Escolaridade"
+                          name={name}
+                          data={schooling}
+                          onChange={onChange}
+                          message={`${errors?.schooling?.message || ""}`}
+                        />
+                      )}
                     />
                     <Input
                       label="Idioma"
@@ -336,7 +369,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }: GetSessionParams) => {
   const session = await getSession({ req });
 
-  const response = await axios.get(`${process.env.API}/estabelecimentos/filter`);
+  // const response = await axios.get(`${process.env.API}/estabelecimentos/filter`);
 
   if (!session) {
     return {
@@ -353,7 +386,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       bucket: process.env.S3_BUCKET,
       accessKeyId: process.env.S3_KEY,
       secretAccessKey: process.env.S3_SECRET,
-      company: response.data,
+      // company: response.data,
       user: session.user.name,
       id: session.user.id,
       api: process.env.API,

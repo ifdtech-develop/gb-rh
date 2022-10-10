@@ -15,7 +15,8 @@ declare module "next-auth" {
         id_paf?: number,
         paf_name?: string,
         endereco?: string,
-      }
+      },
+      role: number,
 
     }& DefaultSession["user"]
   }

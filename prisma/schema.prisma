@@ -16,7 +16,7 @@ datasource db {
 model candidate {
   id                   Int      @id @default(autoincrement())
   name                 String   @db.VarChar(255)
-  company              Int
+  company              String   @db.VarChar(255)
   sector               String   @db.VarChar(255)
   type_vacancy         String   @db.VarChar(255)
   manager              String   @db.VarChar(255)
