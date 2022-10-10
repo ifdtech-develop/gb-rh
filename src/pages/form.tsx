@@ -245,7 +245,7 @@ const Form = ({
                       message={`${errors?.type_vacancy?.message || ""}`}
                     /> */}
                     <Input
-                      label="Gestor"
+                      label="Solicitante"
                       name="manager"
                       register={register}
                       message={`${errors?.manager?.message || ""}`}
