@@ -50,23 +50,25 @@ const Form = ({
       .date()
       .required("Este campo é obrigatório")
       .min(new Date(), "Data inválida"),
-    // document: yup
-    //   .mixed()
-    //   .test("required", "Documento é obrigatório", (file) => {
-    //     if (file.length === 1) return true;
-    //     return false;
-    //   })
-    //   .test(
-    //     "type",
-    //     "Only the following formats are accepted: .pdf and .doc",
-    //     (value) => {
-    //       return (
-    //         value &&
-    //         (value[0]?.type === "application/pdf" ||
-    //           value[0]?.type === "application/msword")
-    //       );
-    //     }
-    //   ),
+    document: yup
+      .mixed()
+      // .test("required", "Documento é obrigatório", (file) => {
+      //   if (file.length === 1) return true;
+      //   return false;
+      // })
+      .test(
+        "type",
+        "Only the following formats are accepted: .pdf and .doc",
+        (value) => {
+          if (value[0] == null) return true;
+
+          return (
+            value &&
+            (value[0]?.type === "application/pdf" ||
+              value[0]?.type === "application/msword")
+          );
+        }
+      ),
   });
 
   const {
@@ -92,32 +94,32 @@ const Form = ({
   const submit = async (data) => {
     console.log(data);
 
-    // let file = data.document[0];
-    // let type = file.type == "application/pdf" ? ".pdf" : ".doc";
+    let file = data?.document[0];
+    let type = file?.type == "application/pdf" ? ".pdf" : ".doc";
+    let newFileName = null;
 
     const isValidate = await schema.isValid(data);
     if (isValidate) {
       try {
-        
-       
-          // let newFileName =
-          //   timetamp +
-          //   "-" +
-          //   encodeURIComponent(
-          //     file.name
-          //       .toLowerCase()
-          //       .replace(/[^a-z0-9 _-]+/gi, "-")
-          //       .replace(/\s+/g, "-") + type
-          //   );
+        if (file) {
+          newFileName =
+            timetamp +
+            "-" +
+            encodeURIComponent(
+              file.name
+                .toLowerCase()
+                .replace(/[^a-z0-9 _-]+/gi, "-")
+                .replace(/\s+/g, "-") + type
+            );
 
-          // const ReactS3Client = new S3(config);
-          // ReactS3Client.uploadFile(file, newFileName).then((data) => {
-          //   console.log(data);
-          //   if (data.status === 204) {
-          //     console.log("success");
-          //   }
-          // });
-        
+          const ReactS3Client = new S3(config);
+          ReactS3Client.uploadFile(file, newFileName).then((data) => {
+            console.log(data);
+            if (data.status === 204) {
+              console.log("success");
+            }
+          });
+        }
 
         await axios.post("/api/candidate", {
           name: "Não Informado",
@@ -131,7 +133,7 @@ const Form = ({
           experience: data.experience,
           languages: data.languages,
           start_forecast: data.start_forecast,
-          document: "null",
+          document: newFileName,
           status: "pendente",
           userid: id,
         });
@@ -287,7 +289,7 @@ const Form = ({
                       message={`${errors?.start_forecast?.message || ""}`}
                     />
                   </div>
-                  {/* <hr className="mt-6 border-b-1 border-blueGray-300" />
+                  <hr className="mt-6 border-b-1 border-blueGray-300" />
                   <div className="flex flex-wrap">
                     <div className="w-full lg:w-12/12 px-4">
                       <label
@@ -308,7 +310,7 @@ const Form = ({
                         errors?.document?.message || ""
                       }`}</span>
                     </div>
-                  </div> */}
+                  </div>
                   <hr className="mt-6 border-b-1 border-blueGray-300" />
 
                   <div className="flex flex-wrap">
