@@ -54,7 +54,7 @@ export const CustomPaginationActionsTable = ({
 
   function createData(
     id: number,
-    name: string,
+    // name: string,
     company: string,
     sector: string,
     type_vacancy: string,
@@ -76,7 +76,7 @@ export const CustomPaginationActionsTable = ({
   ) {
     return {
       id,
-      name,
+      // name,
       company,
       sector,
       type_vacancy,
@@ -102,7 +102,7 @@ export const CustomPaginationActionsTable = ({
   let rows = rowsData?.map((row) => {
     return createData(
       row.id,
-      row.name,
+      // row.name,
       row.company,
       row.sector,
       row.type_vacancy,
@@ -128,7 +128,7 @@ export const CustomPaginationActionsTable = ({
     rows = rowsData?.map((row) => {
       return createData(
         row.id,
-        row.name,
+        // row.name,
         row.company,
         row.sector,
         row.type_vacancy,

@@ -36,7 +36,7 @@ const Form = ({
   const [companyName, setCompanyName] = useState();
   let onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   const schema = yup.object().shape({
-    name: yup.string().required("Este campo é obrigatório"),
+    // name: yup.string().required("Este campo é obrigatório"),
     company: yup.string().required("Este campo é obrigatório"),
     sector: yup.string().required("Este campo é obrigatório"),
     type_vacancy: yup.string().required("Este campo é obrigatório"),
@@ -92,7 +92,7 @@ const Form = ({
   const submit = async (data) => {
     console.log(data);
 
-    let file = data.document[0];
+    // let file = data.document[0];
     // let type = file.type == "application/pdf" ? ".pdf" : ".doc";
 
     const isValidate = await schema.isValid(data);
@@ -120,7 +120,7 @@ const Form = ({
         
 
         await axios.post("/api/candidate", {
-          name: data.name,
+          name: "Não Informado",
           company: data.company,
           sector: data.sector,
           type_vacancy: data.type_vacancy,
@@ -171,13 +171,13 @@ const Form = ({
                     Informação do candidato
                   </h6>
                   <div className="flex flex-wrap">
-                    <Input
+                    {/* <Input
                       label="Nome do candidato"
                       name="name"
                       register={register}
                       message={`${errors?.name?.message || ""}`}
                       size="lg"
-                    />
+                    /> */}
                     <Controller
                       control={control}
                       name="company"

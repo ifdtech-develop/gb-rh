@@ -93,12 +93,12 @@ export function Modal({ row, id }) {
                             {/* form inside of modal */}
                             <div className="flex flex-col">
                               <div className="flex flex-row my-2">
-                                <MInput
+                                {/* <MInput
                                   type="text"
                                   label="Nome"
                                   value={row.name}
                                   disabled={true}
-                                />
+                                /> */}
                                 <MInput
                                   type="text"
                                   label="Solicitante"
@@ -117,6 +117,12 @@ export function Modal({ row, id }) {
                                   type="text"
                                   label="Empresa"
                                   value={row.company}
+                                  disabled={true}
+                                />
+                                     <MInput
+                                  type="text"
+                                  label="Cargo"
+                                  value={row.vacancy}
                                   disabled={true}
                                 />
                               </div>
@@ -141,20 +147,16 @@ export function Modal({ row, id }) {
                                   value={row.schooling}
                                   disabled={true}
                                 />
-                                <MInput
-                                  type="text"
-                                  label="Cargo"
-                                  value={row.vacancy}
-                                  disabled={true}
-                                />
-                              </div>
-                              <div className="flex flex-row  my-2">
-                                <MInput
+                                        <MInput
                                   type="text"
                                   label="Tipo de vaga"
                                   value={row.type_vacancy}
                                   disabled={true}
                                 />
+                           
+                              </div>
+                              <div className="flex flex-row  my-2">
+                        
                                 <MSelect
                                   onChange={(e) => setStatus(e.target.value)}
                                   label="Status"
