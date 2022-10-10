@@ -2,7 +2,7 @@
 CREATE TABLE "candidate" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "company" BIGINT NOT NULL,
+    "company" VARCHAR(255) NOT NULL,
     "sector" VARCHAR(255) NOT NULL,
     "type_vacancy" VARCHAR(255) NOT NULL,
     "manager" VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE "candidate" (
     "hiring_justification" TEXT NOT NULL,
     "experience" TEXT NOT NULL,
     "languages" VARCHAR(255) NOT NULL,
-    "start_forecast" VARCHAR(255) NOT NULL,
+    "start_forecast" TIMESTAMP(3) NOT NULL,
     "document" VARCHAR(255) NOT NULL,
     "username" VARCHAR(255),
     "status" VARCHAR(255) NOT NULL,

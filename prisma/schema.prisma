@@ -25,7 +25,7 @@ model candidate {
   hiring_justification String   @db.Text
   experience           String   @db.Text
   languages            String   @db.VarChar(255)
-  start_forecast       String   @db.VarChar(255)
+  start_forecast       DateTime
   document             String   @db.VarChar(255)
   username             String?  @db.VarChar(255)
   status               String   @db.VarChar(255)

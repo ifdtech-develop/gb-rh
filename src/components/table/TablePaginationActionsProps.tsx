@@ -205,7 +205,7 @@ export const CustomPaginationActionsTable = ({
                 <TableCell style={{ width: 160 }} align="center">
                   {moment(`${row.createdAt}`).fromNow()}
                 </TableCell>
-                <TableCell style={{ width: 160 }} align="center">
+                {/* <TableCell style={{ width: 160 }} align="center">
                   <a
                     // className="text-blue-400 underline hover:underline-offset-4"
                     href={`https://gb-rh.s3.amazonaws.com/${row.document}`}
@@ -216,7 +216,7 @@ export const CustomPaginationActionsTable = ({
                       Documento
                     </button>
                   </a>
-                </TableCell>
+                </TableCell> */}
                 <TableCell style={{ width: 160 }} align="center">
                   <Modal row={row} id={id} />
                 </TableCell>

@@ -11,6 +11,7 @@ import { MSelect } from "./modal/select";
 import router, {Router, useRouter} from "next/router"
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import moment from "moment";
 
 export function Modal({ row, id }) {
   const [open, setOpen] = useState(false);
@@ -100,7 +101,7 @@ export function Modal({ row, id }) {
                                 />
                                 <MInput
                                   type="text"
-                                  label="Gestor"
+                                  label="Solicitante"
                                   value={row.manager}
                                   disabled={true}
                                 />
@@ -129,7 +130,7 @@ export function Modal({ row, id }) {
                                 <MInput
                                   type="text"
                                   label="Previsão de inicio"
-                                  value={row.start_forecast}
+                                  value={moment(row.start_date).format("DD/MM/YYYY")}
                                   disabled={true}
                                 />
                                 {/* </div>

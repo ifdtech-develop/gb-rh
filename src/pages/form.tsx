@@ -15,7 +15,12 @@ import Image from "next/image";
 import Logo from "../assets/img/logo.png";
 import { Select } from "../components/Select";
 import Router from "next/router";
-import { company, schooling, sector, type_vacancy } from "../components/data/select";
+import {
+  company,
+  schooling,
+  sector,
+  type_vacancy,
+} from "../components/data/select";
 const Form = ({
   changePage,
   region,
@@ -25,7 +30,7 @@ const Form = ({
   // company,
   user,
   id,
-  api
+  api,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [companyName, setCompanyName] = useState();
@@ -41,26 +46,28 @@ const Form = ({
     hiring_justification: yup.string().required("Este campo é obrigatório"),
     experience: yup.string().required("Este campo é obrigatório"),
     languages: yup.string().required("Este campo é obrigatório"),
-    start_forecast: yup.string().required("Este campo é obrigatório"),
-    document: yup
-      .mixed()
-      .test("required", "Documento é obrigatório", (file) => {
-        if (file.length === 1) return true;
-        return false;
-      })
-      .test(
-        "type",
-        "Only the following formats are accepted: .pdf and .doc",
-        (value) => {
-          return (
-            value &&
-            (value[0]?.type === "application/pdf" ||
-              value[0]?.type === "application/msword")
-          );
-        }
-      ),
+    start_forecast: yup
+      .date()
+      .required("Este campo é obrigatório")
+      .min(new Date(), "Data inválida"),
+    // document: yup
+    //   .mixed()
+    //   .test("required", "Documento é obrigatório", (file) => {
+    //     if (file.length === 1) return true;
+    //     return false;
+    //   })
+    //   .test(
+    //     "type",
+    //     "Only the following formats are accepted: .pdf and .doc",
+    //     (value) => {
+    //       return (
+    //         value &&
+    //         (value[0]?.type === "application/pdf" ||
+    //           value[0]?.type === "application/msword")
+    //       );
+    //     }
+    //   ),
   });
-
 
   const {
     register,
@@ -86,29 +93,31 @@ const Form = ({
     console.log(data);
 
     let file = data.document[0];
+    // let type = file.type == "application/pdf" ? ".pdf" : ".doc";
 
     const isValidate = await schema.isValid(data);
     if (isValidate) {
       try {
-        const type = file.type === "application/pdf" ? ".pdf" : ".doc";
+        
+       
+          // let newFileName =
+          //   timetamp +
+          //   "-" +
+          //   encodeURIComponent(
+          //     file.name
+          //       .toLowerCase()
+          //       .replace(/[^a-z0-9 _-]+/gi, "-")
+          //       .replace(/\s+/g, "-") + type
+          //   );
 
-        let newFileName =
-          timetamp +
-          "-" +
-          encodeURIComponent(
-            file.name
-              .toLowerCase()
-              .replace(/[^a-z0-9 _-]+/gi, "-")
-              .replace(/\s+/g, "-") + type
-          );
-
-        const ReactS3Client = new S3(config);
-        ReactS3Client.uploadFile(file, newFileName).then((data) => {
-          console.log(data);
-          if (data.status === 204) {
-            console.log("success");
-          }
-        });
+          // const ReactS3Client = new S3(config);
+          // ReactS3Client.uploadFile(file, newFileName).then((data) => {
+          //   console.log(data);
+          //   if (data.status === 204) {
+          //     console.log("success");
+          //   }
+          // });
+        
 
         await axios.post("/api/candidate", {
           name: data.name,
@@ -122,11 +131,11 @@ const Form = ({
           experience: data.experience,
           languages: data.languages,
           start_forecast: data.start_forecast,
-          document: newFileName,
+          document: "null",
           status: "pendente",
           userid: id,
         });
-        enqueueSnackbar("Candidato cadastrado com sucesso!", {
+        enqueueSnackbar("Solicitação cadastrada com sucesso!", {
           variant: "success",
         });
         Router.push("/candidatos");
@@ -247,7 +256,7 @@ const Form = ({
                       register={register}
                       message={`${errors?.vacancy?.message || ""}`}
                     />
-                                        <Controller
+                    <Controller
                       control={control}
                       name="schooling"
                       {...register("schooling", {
@@ -274,10 +283,11 @@ const Form = ({
                       label="Previsão de inicio"
                       name="start_forecast"
                       register={register}
+                      type="date"
                       message={`${errors?.start_forecast?.message || ""}`}
                     />
                   </div>
-                  <hr className="mt-6 border-b-1 border-blueGray-300" />
+                  {/* <hr className="mt-6 border-b-1 border-blueGray-300" />
                   <div className="flex flex-wrap">
                     <div className="w-full lg:w-12/12 px-4">
                       <label
@@ -298,7 +308,7 @@ const Form = ({
                         errors?.document?.message || ""
                       }`}</span>
                     </div>
-                  </div>
+                  </div> */}
                   <hr className="mt-6 border-b-1 border-blueGray-300" />
 
                   <div className="flex flex-wrap">
@@ -323,7 +333,7 @@ const Form = ({
                     </div>
                   </div>
 
-                  <hr className="mt-6 border-b-1 border-blueGray-300" />
+                  <hr className="my-3 border-b-1 border-blueGray-300" />
                   <div className="flex flex-wrap">
                     <div className="w-full lg:w-12/12 px-4">
                       <div className="relative w-full mb-3">
