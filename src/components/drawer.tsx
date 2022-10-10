@@ -152,12 +152,12 @@ export function MiniDrawer(props) {
         <Divider />
         <List>
           <a href="/candidatos">
-            <ItemList text={"Candidatos cadastrados"} open={open}>
+            <ItemList text={"Requisições cadastradas"} open={open}>
               <RuleIcon />
             </ItemList>
           </a>
           <a href="/form" >
-            <ItemList text={"Cadastro de Candidato"} open={open}>
+            <ItemList text={"Criar Requisição"} open={open}>
               <AssignmentIcon />
             </ItemList>
           </a>
