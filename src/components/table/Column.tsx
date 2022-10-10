@@ -28,11 +28,11 @@ export const columns: readonly Column[] = [
   { id: "status", label: "Status", minWidth: 100, align: "center" },
   // { id: "stage", label: "Idiomas", minWidth: 100, align: "center" },
   { id: "date", label: "Criado", minWidth: 100, align: "center" },
-  // {
-  //   id: "curriculo",
-  //   label: "Curriculo",
-  //   minWidth: 170,
-  //   align: "center",
-  // },
+  {
+    id: "curriculo",
+    label: "Documento",
+    minWidth: 170,
+    align: "center",
+  },
   { id: "actions", label: "Ações", minWidth: 170, align: "center" },
 ];

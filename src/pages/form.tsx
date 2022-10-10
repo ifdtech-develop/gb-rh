@@ -169,9 +169,9 @@ const Form = ({
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form onSubmit={handleSubmit(submit)}>
-                  <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  {/* <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                     Informação do candidato
-                  </h6>
+                  </h6> */}
                   <div className="flex flex-wrap">
                     {/* <Input
                       label="Nome do candidato"

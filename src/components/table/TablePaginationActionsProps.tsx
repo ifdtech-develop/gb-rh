@@ -34,7 +34,7 @@ export const CustomPaginationActionsTable = ({
   total,
   // companys,
   id,
-}: CandidateProps  & UserProps) => {
+}: CandidateProps & UserProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rowsData, setRowsData] = React.useState(data);
@@ -97,7 +97,6 @@ export const CustomPaginationActionsTable = ({
       updatedAt,
     };
   }
-
 
   let rows = rowsData?.map((row) => {
     return createData(
@@ -165,11 +164,8 @@ export const CustomPaginationActionsTable = ({
     setPage(0);
   };
 
-  
   return (
     <>
-      {/* {moment.locale("pt-br")}  */}
-
       <TableContainer component={Paper} className="flex justify-center">
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead className="sticky top-0">
@@ -206,23 +202,22 @@ export const CustomPaginationActionsTable = ({
                   {moment(`${row.createdAt}`).fromNow()}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
-                  { row.document ?(
+                  {row.document ? (
                     <a
-                    // className="text-blue-400 underline hover:underline-offset-4"
-                    href={`https://gb-rh.s3.amazonaws.com/${row.document}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      Documento
-                    </button>
-                  </a>
+                      // className="text-blue-400 underline hover:underline-offset-4"
+                      href={`https://gb-rh.s3.amazonaws.com/${row.document}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Documento
+                      </button>
+                    </a>
                   ) : (
                     <button className="bg-gray-500 text-white font-bold py-1 px-4 rounded cursor-not-allowed">
                       Sem Documento
                     </button>
-                  )
-                  }
+                  )}
                 </TableCell>
                 <TableCell style={{ width: 160 }} align="center">
                   <Modal row={row} id={id} />
