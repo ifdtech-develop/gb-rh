@@ -64,7 +64,7 @@ export const CustomPaginationActionsTable = ({
     hiring_justification: string,
     experience: string,
     languages: string,
-    start_forecast: string,
+    start_forecast: Date,
     document: string,
     username: string,
     status: string,
