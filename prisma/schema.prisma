@@ -29,6 +29,7 @@ model candidate {
   document             String?  @db.VarChar(255)
   username             String?  @db.VarChar(255)
   status               String   @db.VarChar(255)
+  status2              String?  @db.VarChar(255)
   userid               Int?
   controllership       Int?
   director             Int?

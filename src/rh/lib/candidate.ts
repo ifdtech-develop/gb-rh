@@ -29,6 +29,7 @@ export const newCandidate = async ({
   start_forecast,
   document,
   status,
+  status2,
   userid
   
 }: candidate) => {
@@ -49,6 +50,7 @@ export const newCandidate = async ({
         start_forecast,
         document,
         status,
+        status2,
         userid
       }
     });

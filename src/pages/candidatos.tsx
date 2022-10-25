@@ -2,9 +2,9 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { getSession, signOut } from "next-auth/react";
 import React from "react";
-import { CandidateProps } from "../lib/candidate";
-import { CustomPaginationActionsTable } from "../components/table/TablePaginationActionsProps";
-import { MiniDrawer } from "../components/drawer";
+import { CandidateProps } from "../rh/lib/candidate";
+import { CustomPaginationActionsTable } from "../rh/components/table/TablePaginationActionsProps";
+import { MiniDrawer } from "../rh/components/drawer";
 import { Grid } from "@mui/material";
 
 const Candidates = ({ data, total, name, id, companys, changePage }) => {

@@ -2,10 +2,10 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { getSession, GetSessionParams } from "next-auth/react";
 import React, { useState } from "react";
-import { MiniDrawer } from "../components/drawer";
+import { MiniDrawer } from "../rh/components/drawer";
 import  Candidates  from "./candidatos";
 import  Form  from "./form";
-import { CandidateProps } from "../lib/candidate";
+import { CandidateProps } from "../rh/lib/candidate";
 
 const Page = ({
   data,

@@ -3,7 +3,7 @@ import {
   getCandidates,
   newCandidate,
   updateCandidate,
-} from "../../lib/candidate";
+} from "../../rh/lib/candidate";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query } = req;

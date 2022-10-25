@@ -12,7 +12,7 @@ import { GetServerSideProps } from "next";
 import axios from "axios";
 import { TablePaginationActions } from "./TablePaginationActions";
 import { TableHead } from "@mui/material";
-import { columns } from "../../components/table/Column";
+import { columns } from "./Column";
 import { Modal } from "../modal";
 import moment from "moment";
 import { CompanyProps } from "../../types/company";
@@ -68,6 +68,7 @@ export const CustomPaginationActionsTable = ({
     document: string,
     username: string,
     status: string,
+    status2: string,
     userid: number,
     controllership: number,
     director: number,
@@ -90,6 +91,7 @@ export const CustomPaginationActionsTable = ({
       document,
       username,
       status,
+      status2,
       userid,
       controllership,
       director,
@@ -115,6 +117,7 @@ export const CustomPaginationActionsTable = ({
       row.document,
       row.username,
       row.status,
+      row.status2,
       row.userid,
       row.controllership,
       row.director,
@@ -141,6 +144,7 @@ export const CustomPaginationActionsTable = ({
         row.document,
         row.username,
         row.status,
+        row.status2,
         row.userid,
         row.controllership,
         row.director,

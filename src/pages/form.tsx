@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Input } from "../components/input";
+import { Input } from "../rh/components/input";
 import { GetServerSideProps } from "next";
 import { getSession, GetSessionParams, signOut } from "next-auth/react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,20 +7,20 @@ import * as yup from "yup";
 import axios from "axios";
 import S3 from "react-aws-s3";
 import { Controller, useForm } from "react-hook-form";
-import { newCandidate } from "../lib/candidate";
+import { newCandidate } from "../rh/lib/candidate";
 import { useSnackbar } from "notistack";
-import { MiniDrawer } from "../components/drawer";
+import { MiniDrawer } from "../rh/components/drawer";
 import Image from "next/image";
 
 import Logo from "../assets/img/logo.png";
-import { Select } from "../components/Select";
+import { Select } from "../rh/components/Select";
 import Router from "next/router";
 import {
   company,
   schooling,
   sector,
   type_vacancy,
-} from "../components/data/select";
+} from "../rh/components/data/select";
 const Form = ({
   changePage,
   region,

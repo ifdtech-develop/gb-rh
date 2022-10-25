@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { InputMask } from "../components/inputMask";
+import { InputMask } from "../rh/components/inputMask";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "../utils/validation";
+import { userSchema } from "../rh/utils/validation";
 import NumberFormat from "react-number-format";
 import { getSession, signIn } from "next-auth/react";
 import { log } from "console";
-import { CustomInput } from "../components/customInput";
-import { SignInError } from "../utils/errorLogin";
+import { CustomInput } from "../rh/components/customInput";
+import { SignInError } from "../rh/utils/errorLogin";
 import { useRouter } from "next/router";
 
 export default function Login() {
